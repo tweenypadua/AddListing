@@ -1,0 +1,601 @@
+<html>
+<head>
+
+<!--  meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<style>
+    .container
+    {
+        font-family: Montserrat Light;
+        font-size: 15;
+        color: #b8b894;
+        padding: 1vw;
+        font-weight: bold;
+    }
+
+    img{
+      height: auto;
+      width: 3vw;
+      margin: 1vw;
+    }
+
+    .header{
+      color: #804db3;
+    }
+
+    .preview{
+      font-size: 12;
+    }
+
+    .column_2{
+    -webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+    font-size: 11;
+}
+.column_2>span{
+  display:block;
+}
+
+
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="row display-flex">
+          <div class="col-md-3">
+            <img src="Icons/Icons/Crompton-Favicon-2.svg">
+          </div>
+            <div class="offset-md-6 col-md-3">
+                <input type="button" id="cancel" value="Cancel"/> 
+                <input type="button" id="save" value="Save"/> 
+              </div>
+        </div>
+
+        <div class="row display-flex">
+            <div class="col-md-1">
+              <img src="Icons/Icons/add.svg">
+            </div>
+            <div class="col-md-3">
+              <p class="header"> Property Details </p>
+            </div>
+            <div class="offset-md-3 col-md-5">
+                <p class="header"> Media & Ad Copy</p>
+                <a id="submit" class="preview"><u>PREVIEW AD</u></a>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-1">
+            <img src="Icons/Icons/magnet.svg">
+          </div>
+          <div class="col-md-3">
+            <form>
+                <div class="form-group">               
+                    <label for="name">Assigned Agent</label>
+                    <select class="form-control" id="name">
+                      <option>Helen Martin</option>
+                      <option>Agent 2</option>
+                      <option>Agent 3</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+                <label for="beds">Beds</label>
+                <select class="form-control" id="beds">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title (40 characters)">
+              </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+              <img src="Icons/Icons/browser.svg">
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="emirate">Emirate</label>
+                    <select class="form-control" id="emirate">
+                      <option>Abu Dhabi</option>
+                      <option>Dubai</option>
+                      <option>Ajman</option>
+                      <option>Fujairah</option>
+                      <option>Ras al Khaimah</option>
+                      <option>Sharjah</option>
+                      <option>Umm al Quwain</option>             
+                    </select>
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+               <div class="form-group">
+            <label for="baths">Baths</label>
+            <select class="form-control" id="baths">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+            </div>
+            <div class="col-md-5">
+                <div class="mb">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" placeholder="Description (300 words)"></textarea>
+                  </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              <img src="Icons/Icons/partnership-handshake.svg">
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                  <label for="community">Community</label>
+                  <input type="text" class="form-control" id="community">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="parking">Parking</label>
+                    <select class="form-control" id="parking">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col-md-5"><br>
+              <div class="form-group-lg">
+              <br><label class="control-label header" for="features">Features</label>            
+                <div th:each="feature : ${features}" class="column_2">
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Balcony</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Basement Parking</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Garden</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Pool</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Built-in Wardrobes</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Jacuzzi</label>
+                  </span>
+
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Maid's Room</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Marble Floors</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Study</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Upgraded Interior</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Storage</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Steam Room</label>
+                  </span>
+
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Sauna</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Pets Allowed</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">School</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Shops</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Shopping Mall</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Tennis Court</label>
+                  </span>
+
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Fitness Centre</label>
+                  </span>
+                  
+                </div>
+              </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              <img src="Icons/Icons/gear.svg">
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                  <label for="subcommunity">Sub-community</label>
+                  <input type="text" class="form-control" id="subcommunity">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="view">View</label>
+                <input type="text" class="form-control" id="view">
+                </div>
+            </div>
+            <div class="col-md-5">
+              <div class="dropzone"></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="unitnum">Unit no.</label>
+                    <input type="number" class="form-control" id="unitnum">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="furnishing">Furnishing</label>
+                <input type="text" class="form-control" id="furnishing">
+                </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Virtual Tour URL (Youtube, Vimeo, Dailymotion)">
+            </div>
+            </div>
+          </div>
+       
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="text" class="form-control" id="type">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="floor">Floor</label>
+                    <input type="number" class="form-control" id="floor">
+                  </div>
+            </div>
+            <div class="col-md-5">
+              <label class="control-label header" for="features">Portals</label>
+              <div class="form-group-lg">
+                <div th:each="feature : ${features}" class="column_2">
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Property Finder</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Dubizzle</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Bayut</label>
+                  </span>
+                  
+                   <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Own Site</label>
+                  </span>
+
+                  <span>
+                    <input type="checkbox" th:field="*{checkedItems}" th:value="${feature}" />
+                  <label class="checkbox-inline" th:text="${feature}">Generic XML</label>
+                  </span>
+                </div>
+            </div>
+          </div>
+        </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="bua">BUA</label>
+                    <input type="text" class="form-control" id="bua">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="streetnum">Street no.</label>
+                    <input type="number" class="form-control" id="streetnum">
+                  </div>
+            </div>
+            <div class="col-md-5">
+              
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+              <p class="header"> Pricing </p>
+            </div>
+            <div class="offset-md-3 col-md-3">
+                <p>  </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="price">Price (AED)</label>
+                    <input type="number" class="form-control" id="price">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="cheques">Cheques</label>
+                <input type="number" class="form-control" id="cheques">
+              </div>
+            </div>
+            <div class="col-md-5">
+              
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="pricesqft">Price / Sqft.</label>
+                    <input type="number" class="form-control" id="pricesqft">
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="commission">Commission</label>
+                    <input type="number" class="form-control" id="commission">
+                  </div>
+            </div>
+            <div class="col-md-5">
+              
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="frequency">Frequency</label>
+                    <select class="form-control" id="frequency">
+                      <option>Monthly</option>
+                      <option>Quarterly</option>
+                      <option>Semi-Annually</option>
+                      <option>Annually</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="deposit">Deposit</label>
+                    <input type="number" class="form-control" id="deposit">
+                  </div>
+            </div>
+            <div class="col-md-5">
+              
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status">
+                      <option>Published</option>
+                      <option>Rent</option>
+                      <option>Pending</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label for="notes">Notes</label>
+                    <textarea class="form-control" id="notes"></textarea>
+                  </div>
+            </div>
+            <div class="col-md-5">  
+              
+            </div>
+          </div>
+    </div>
+	<script>
+
+	$('#submit').click(function() {
+		
+		 var doc = new jsPDF();		 
+		// doc.addImage(imgData, 'JPEG',0,0,210,297);
+		 
+		var name = $('#name').val();
+		var beds = $('#beds').val();
+		var emirate = $('#emirate').val();
+		var baths = $('#baths').val();
+    var community = $('#community').val();
+		var parking = $('#parking').val();
+		var subcommunity = $('#subcommunity').val();
+		var view = $('#view').val();
+    var unitnum = $('#unitnum').val();
+		var furnishing = $('#furnishing').val();
+		var type = $('#type').val();
+		var floor = $('#floor').val();
+    var bua = $('#bua').val();
+		var streetnum = $('#streetnum').val();
+		var price = $('#price').val();
+		var cheques = $('#cheques').val();
+    var pricesqft = $('#pricesqft').val();
+		var commission = $('#commission').val();
+		var frequency = $('#frequency').val();
+		var deposit = $('#deposit').val();
+    var status = $('#status').val();
+		var notes = $('#notes').val();
+		var title = $('#title').val();
+		var description = $('#description').val();
+
+		doc.setFontSize(18);
+		doc.setTextColor(92, 76, 76);
+		doc.text(23, 30, title);
+
+    doc.setFontSize(8);
+		doc.setTextColor(92, 76, 76);
+		doc.text(23, 34, subcommunity);
+		doc.text(53, 34, community);
+		doc.text(83, 34, emirate); 
+
+    doc.setFontSize(13);
+		doc.setTextColor(92, 76, 76);
+    doc.text(170, 34, price); 
+
+    doc.setFontSize(12);
+		doc.setTextColor(92, 76, 76);
+    doc.text("Contact Information", 23, 100); 
+   
+    doc.setFontSize(10);
+		doc.setTextColor(92, 76, 76);
+    doc.text(40, 105, name); 
+    doc.text("some number", 40, 110); 
+    doc.text("some email address", 40, 115); 
+
+    doc.setFontSize(12);
+		doc.setTextColor(92, 76, 76);
+    doc.text("Description", 23, 145); 
+
+    var splitdesc = doc.splitTextToSize(description, 180);
+    doc.setFontSize(10);
+		doc.setTextColor(92, 76, 76);
+    doc.text(23, 155, splitdesc); 
+
+    doc.setFontSize(12);
+		doc.setTextColor(92, 76, 76);
+    doc.text("Detail", 23, 255); 
+
+    doc.setFontSize(10);
+		doc.setTextColor(92, 76, 76);
+    doc.text("Reference no.: CA-R-37677", 23, 265); 
+    doc.text("Bathrooms:", 130, 265); 
+    doc.text(150,265, baths);
+    doc.text("Price:", 23, 270); 
+    doc.text(33,270, price);
+    doc.text("Parkings:", 130, 270); 
+    doc.text(150,270, parking);
+    doc.text("Property Size:", 23, 275); 
+    doc.text("Property Type:", 130, 275); 
+    doc.text(153,275, type);
+    doc.text("Bedroom:", 23, 280); 
+    doc.text(37,280, beds);
+    doc.text("Property Status:", 130, 280); 
+    doc.text(157,280, status);
+
+    doc.setFontSize(12);
+		doc.setTextColor(92, 76, 76);
+    doc.text("Features", 23, 290); 
+
+		doc.save('AddListing.pdf');
+	});
+</script>
+</body>
+</html>
